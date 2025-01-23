@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ review.book_name }} Review</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('{% static "RR/images/background-image.png" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: #333;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: 200px;
+            border-radius: 10px;
+        }
+        .review-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .review-content p {
+            margin: 5px 0;
+        }
+        .comment-section {
+            margin-top: 20px;
+        }
+        .comment-section h3 {
+            margin-bottom: 10px;
+        }
+        .comment-section form {
+            margin-bottom: 20px;
+        }
+        .comment-section form input, .comment-section form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .comment-section form button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .comment-section form button:hover {
+            background-color: #0056b3;
+        }
+        .comments {
+            margin-top: 20px;
+        }
+        .comment {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            {% if review.image %}
+            <img src="{{ review.image.url }}" alt="{{ review.book_name }}">
+            {% endif %}
+        </div>
+        <div class="review-content">
+            <h1>{{ review.book_name }} by {{ review.author }}</h1>
+            <p><strong>Genre:</strong> {{ review.genre }}</p>
+            <p><strong>Volume:</strong> {{ review.volume }}</p>
+            <p><strong>Availability:</strong> {{ review.availability }}</p>
+            <p>{{ review.review }}</p>
+            <p><strong>Pros:</strong> {{ review.pros }}</p>
+            <p><strong>Cons:</strong> {{ review.cons }}</p>
+            <p><strong>Reviewed by:</strong> {{ review.reviewed_by }}</p>
+            <p><strong>Date:</strong> {{ review.review_date }}</p>
+        </div>
+        <div class="comment-section">
+            <h3>Leave a Comment</h3>
+            <form method="POST" action="{% url 'detailed_review' review.id %}">
+                {% csrf_token %}
+                <input type="text" name="user" placeholder="Your Name" required>
+                <textarea name="comment" placeholder="Your Comment" rows="4" required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+            <div class="comments">
+                <h3>Comments</h3>
+                {% for comment in comments %}
+                <div class="comment">
+                    <p><strong>{{ comment.user }}</strong> ({{ comment.date }}):</p>
+                    <p>{{ comment.comment }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

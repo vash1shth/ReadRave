@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Reviews</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('{% static "RR/images/background2-image.png" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: #333;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #ffffff;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .navbar a {
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+        .navbar a:hover {
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .form-container input, .form-container textarea, .form-container select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+        .reviews {
+            margin: 20px auto;
+            max-width: 800px;
+        }
+        .review {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        .review:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .review img {
+            max-width: 100px;
+            height: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <button onclick="location.href='{% url 'user_dashboard' %}'">Home</button>
+        <button onclick="location.href='{% url 'promote' %}'">Promote Books</button>
+        <button onclick="location.href='{% url 'exchange' %}'">Exchange Books</button>
+        <button onclick="location.href='{% url 'blogs' %}'">Blogs</button>
+        <button onclick="location.href='{% url 'read_and_earn' %}'">Read and Earn</button>
+    </div>
+    <div class="container">
+        <h1>Book Reviews</h1>
+        <div class="form-container">
+            <h2>Submit a Book Review</h2>
+            <form method="POST" action="{% url 'reviews' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="text" id="bookName" name="bookName" placeholder="Book Name" required>
+                <input type="text" id="author" name="author" placeholder="Author" required>
+                <input type="text" id="genre" name="genre" placeholder="Genre" required>
+                <input type="text" id="volume" name="volume" placeholder="Volume (optional)">
+                <input type="text" id="availability" name="availability" placeholder="Availability (e.g., Amazon, Flipkart)" required>
+                <textarea id="bookReview" name="bookReview" placeholder="Book Review" rows="4" required></textarea>
+                <textarea id="pros" name="pros" placeholder="Pros of Book" rows="2" required></textarea>
+                <textarea id="cons" name="cons" placeholder="Cons of Book" rows="2" required></textarea>
+                <input type="text" id="reviewedBy" name="reviewedBy" placeholder="Reviewed by" required>
+                <input type="date" id="reviewDate" name="reviewDate" required>
+                <input type="file" id="image" name="image" accept="image/*">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div class="reviews">
+            {% for review in reviews %}
+            <div class="review" onclick="location.href='{% url 'detailed_review' review.id %}'">
+                <img src="{{ review.image.url }}" alt="{{ review.book_name }}">
+                <h3>{{ review.book_name }}</h3>
+                <p><strong>Reviewed by:</strong> {{ review.reviewed_by }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,358 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReadRave</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url("{% static 'RR/images/background-image.png' %}");
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-y: scroll;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            height: 80vh;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .left-content, .right-content {
+            width: 48%;
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 50px;
+            margin-right: 10px;
+        }
+        .welcome {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .welcome h1 { 
+            font-size: 65px; /* Adjust this value as needed */
+        }
+        .buttons {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .buttons button {
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .buttons .exchange {
+            background-color: #fff;
+            color: #333;
+            border: 2px solid #333;
+        }
+        .buttons .promote {
+            background-color: #f0f0f0;
+            color: #333;
+            border: 2px solid #ccc;
+        }
+        .auth-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .auth-buttons button {
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            background-color: #fff;
+            color: #333;
+            border: 2px solid #ccc;
+        }
+        .illustration {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        .illustration img {
+            width: 100%;
+        }
+        .why-readrave {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-image: url("{% static 'RR/images/background2-image.png' %}");
+            background-size: cover;
+            padding: 100px; /* Increased padding */
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .why-readrave .left {
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .why-readrave .left img {
+            width: 100%;
+            max-width: 400px; /* Adjust this value as needed */
+        }
+        .why-readrave .right {
+            width: 60%;
+            padding-left: 20px;
+        }
+        .why-readrave h2 {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        .why-readrave p {
+            font-size: 20px;
+            line-height: 1.5;
+        }
+        .features-section {
+            width: 100%;
+            background-image: url("{% static 'RR/images/background-image.png' %}");
+            padding: 50px 0;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .features-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .features-section .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .features-section .feature {
+            width: 20%;
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .features-section .feature img{
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .testimonials-section { 
+            width: 100%; 
+            background-image: url("{% static 'RR/images/background2-image.png' %}");
+            padding: 50px 0; 
+            margin-top: 20px; 
+            text-align: center; 
+        }
+        .testimonials-section h2 { 
+            font-size: 36px; 
+            margin-bottom: 20px; 
+        } 
+        .testimonials-section .testimonials { 
+            display: flex; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+        }
+        .testimonials-section .testimonial { 
+            width: 25%; 
+            padding: 20px; 
+            margin: 10px; 
+            background: #fff; 
+            border-radius: 10px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+            position: relative; 
+        }
+        .testimonial .quote-icon { 
+            font-size: 50px; 
+            color: #aaa; 
+            position: absolute; 
+            top: 10px; 
+            left: 10px; 
+        } 
+        .testimonial p { 
+            font-size: 18px; 
+            line-height: 1.5; 
+            margin: 40px 0 0; 
+        } 
+        .testimonial .author { 
+            margin-top: 10px; 
+            font-size: 16px; 
+            font-style: italic; 
+        }
+        .footer {
+        background-image:url("{% static 'RR/images/background-image.png' %}");
+        padding: 20px;
+        text-align: center;
+        }
+        .footer h2, .footer h3 {
+        margin-top: 0;
+        }
+        .footer-section, .query-form, .copyright {
+        margin-bottom: 20px;
+        }
+        .footer-content {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        }
+        .contact-info, .social-media {
+        flex: 1;
+        padding: 0 20px;
+        text-align: left;
+        }
+        .contact-info p, .social-media p, .social-media a {
+        margin: 5px 0;
+        }
+        .query-form input, .query-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        }
+        .query-form button {
+        padding: 10px 20px;
+        background: #00796b;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        }
+        .query-form button:hover {
+        background: #004d40;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-buttons">
+        <a href="/login/"><button>Login</button></a> 
+        <a href="/signup/"><button>Sign Up</button></a>
+
+    </div>
+    <div class="container">
+        <div class="left-content">
+            <div class="logo">
+                <img src="{% static 'RR/images/Logo.png' %}" alt="ReadRave Logo">
+                <h3>ReadRave</h3>
+            </div>
+            <div class="welcome">
+                <h1>Welcome To <strong>ReadRave</strong></h1>
+            </div>
+            <div class="buttons">
+                <a href="/exchange/"><button>Exchange Books</button></a> 
+                <a href="/promote/"><button>Promote Books</button></a>
+            </div>
+        </div>
+        <div class="right-content">
+            <div class="illustration">
+                <img src="{% static 'RR/images/book_stack.png' %}" alt="Books Illustration">
+            </div>
+        </div>
+    </div>
+    <div class="why-readrave">
+        <div class="left">
+            <img src="{% static 'RR/images/why-readrave-image.png' %}" alt="Why ReadRave">
+        </div>
+        <div class="right">
+            <h2>Why ReadRave?</h2>
+            <p>ReadRave is a dynamic platform for book enthusiasts to promote, exchange, and review books. It bridges the gap between readers and authors globally.</p>
+        </div>
+    </div>
+    <div class="features-section"> 
+        <h2>ReadRave's Features</h2> 
+        <div class="features"> 
+            <div class="feature"> 
+                <img src="{% static 'RR/images/feature1.png' %}" alt="Book Promotions"> 
+            </div> 
+            <div class="feature"> 
+                <img src="{% static 'RR/images/feature2.png' %}" alt="Easy-to-Use Exchange"> 
+            </div> 
+            <div class="feature"> 
+                <img src="{% static 'RR/images/feature3.png' %}" alt="Read and Earn"> 
+            </div> 
+            <div class="feature"> 
+                <img src="{% static 'RR/images/feature4.png' %}" alt="User-Generated Content"> 
+            </div> 
+        </div> 
+    </div>
+    <div class="testimonials-section">
+        <h2>What Our Readers Say</h2> 
+        <div class="testimonials"> 
+            <div class="testimonial"> 
+                <span class="quote-icon">&#8220;</span> 
+                <p>ReadRave has completely transformed my reading experience! I love how easy it is to exchange books with other readers.</p> 
+                <div class="author">- Jane Doe</div> 
+            </div> 
+            <div class="testimonial"> 
+                <span class="quote-icon">&#8220;</span> 
+                <p>The promotions and recommendations are fantastic. I've discovered so many new authors and books.</p> 
+                <div class="author">- John Smith</div> 
+            </div> 
+            <div class="testimonial"> 
+                <span class="quote-icon">&#8220;</span> 
+                <p>ReadRave's community is warm and welcoming. It's a great platform for any book lover!</p> 
+                <div class="author">- Emily Brown</div> 
+            </div> 
+        </div>    
+    </div>
+    <div class="footer">
+        <div class="footer-section">
+            <h2>Join the ReadRave Community</h2>
+            <p>Connect with fellow book lovers, share your favorite reads, and discover new literary gems. Our community is passionate about reading and eager to welcome you!</p>
+        </div>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>MAIN OFFICE</h3>
+                <p>123 Anywhere St.</p>
+                <p>Pune, Maharashtra</p>
+                <p>India</p>
+                <p>+91-9817526347</p>
+                <p><strong>Readrave@gmail.com</strong></p>
+            </div>
+            <div class="social-media">
+                <h3>SOCIAL MEDIA</h3>
+                <p><a href="#">Facebook</a></p>
+                <p><a href="#">Instagram</a></p>
+                <p><a href="#">Twitter</a></p>
+            </div>
+        </div>
+        <div class="query-form">
+            <h3>Contact Us</h3>
+            <form action="#" method="post">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 ReadRave. All rights reserved.</p>
+        </div>
+    </div>      
+</body>
+</html>
+
+
+
+
+
+
+

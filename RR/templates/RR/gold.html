@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Package</title>
+    <style>
+        body {
+            background-image: url('{% static "RR/images/background-image.png" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            max-width: 900px;
+            width: 90%;
+            overflow: hidden;
+            margin: auto;
+            padding: 40px;
+        }
+        .content {
+            padding: 20px;
+            flex: 1;
+            text-align: center;
+        }
+        .content h1 {
+            margin-top: 0;
+            font-size: 32px;
+        }
+        .content ul {
+            list-style: none;
+            padding: 0;
+            font-size: 18px;
+        }
+        .content ul li {
+            margin-bottom: 10px;
+        }
+        .buy-now {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 18px;
+            margin-top: 30px;
+        }
+        .gold-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .gold-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            text-decoration: none;
+            color: black;
+        }
+        .footer {
+            background-image: url("{% static 'RR/images/background2-image.png' %}");
+            padding: 20px;
+            text-align: center;
+            margin-top: auto;
+        }
+        .footer h2, .footer h3 {
+            margin-top: 0;
+        }
+        .footer-section, .query-form, .copyright {
+            margin-bottom: 20px;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .contact-info, .social-media {
+            flex: 1;
+            padding: 0 20px;
+            text-align: left;
+        }
+        .contact-info p, .social-media p, .social-media a {
+            margin: 5px 0;
+        }
+        .query-form input, .query-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .query-form button {
+            padding: 10px 20px;
+            background: #00796b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .query-form button:hover {
+            background: #004d40;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'promote' %}" class="back-arrow">&#8592;</a>
+    <div class="container">
+        <div class="content">
+            <h1>Gold Package</h1>
+            <p>RS. 500</p>
+            <ul>
+                <li>1. Review by 1 Reader.</li>
+                <li>2. Review on website, Instagram, and on Facebook.</li>
+                <li>3. 3 Promotional Posts for Book.</li>
+                <li>4. Story for Book for 3 days.</li>
+            </ul>
+            <button onclick="location.href='{% url 'packages_payment' %}'">Buy Now</button>
+        </div>
+        <div class="gold-image">
+            <img src="{% static 'RR/images/Gold.png' %}" alt="Gold Package">
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-section">
+            <h2>Join the ReadRave Community</h2>
+            <p>Connect with fellow book lovers, share your favorite reads, and discover new literary gems. Our community is passionate about reading and eager to welcome you!</p>
+        </div>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>MAIN OFFICE</h3>
+                <p>123 Anywhere St.</p>
+                <p>Pune, Maharashtra</p>
+                <p>India</p>
+                <p>+91-9817526347</p>
+                <p><strong>Readrave@gmail.com</strong></p>
+            </div>
+            <div class="social-media">
+                <h3>SOCIAL MEDIA</h3>
+                <p><a href="#">Facebook</a></p>
+                <p><a href="#">Instagram</a></p>
+                <p><a href="#">Twitter</a></p>
+            </div>
+        </div>
+        <div class="query-form">
+            <h3>Contact Us</h3>
+            <form action="#" method="post">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 ReadRave. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

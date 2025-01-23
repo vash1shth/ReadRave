@@ -1,0 +1,206 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exchange Books</title>
+    <style>
+        body {
+            background-image: url('{% static "RR/images/background-image.png" %}');
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;  /* Align items at the start for scroll */
+            min-height: 100vh;  /* Use min-height instead of height */
+            margin: 0;
+            flex-direction: column;
+            overflow-y: auto;  /* Enable vertical scrolling */
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background-color: white;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .navbar button {
+            background-color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .navbar button:hover {
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 120px;
+            width: 100%;  /* Ensure container takes full width */
+        }
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            height: auto;
+            margin: 20px;
+        }
+        .form-container input, .form-container select, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        .conditional-fields {
+            display: none;
+        }
+        .title-container {
+            text-align: right;
+        }
+        .title-container img {
+            max-width: 350px;
+            margin-left: 50px;
+        }
+        .showcase-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin: 20px;
+        }
+        .showcase-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .showcase-item img {
+            max-width: 100px;
+            margin-right: 20px;
+        }
+        .showcase-item div {
+            text-align: left;
+        }
+    </style>
+    <script>
+        function showFields(value) {
+            if (value === 'exchange') {
+                document.getElementById('exchangeFields').style.display = 'block';
+                document.getElementById('sellFields').style.display = 'none';
+            } else if (value === 'sell') {
+                document.getElementById('exchangeFields').style.display = 'none';
+                document.getElementById('sellFields').style.display = 'block';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <button onclick="location.href='{% url 'user_dashboard' %}'">Home</button>
+        <button onclick="location.href='{% url 'promote' %}'">Promote Books</button>
+        <button onclick="location.href='{% url 'exchange' %}'">Exchange Books</button>
+        <button onclick="location.href='{% url 'blogs' %}'">Blogs</button>
+        <button onclick="location.href='{% url 'read_and_earn' %}'">Read and Earn</button>
+    </div>
+    <div class="container">
+        <div class="form-container">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="bookName">Name of Book:</label>
+                <input type="text" id="bookName" name="bookName" required>
+
+                <label for="authorName">Name of Author:</label>
+                <input type="text" id="authorName" name="authorName" required>
+
+                <label for="volume">Volume (if any):</label>
+                <input type="text" id="volume" name="volume">
+
+                <label for="type">Choose Type:</label>
+                <select id="type" name="type" onchange="showFields(this.value)" required>
+                    <option value="">Select</option>
+                    <option value="exchange">Exchange Book</option>
+                    <option value="sell">Sell Book</option>
+                </select>
+
+                <div id="exchangeFields" class="conditional-fields">
+                    <label for="exchangeBooks">Give at least 5 Books' Names for Exchange:</label>
+                    <textarea id="exchangeBooks" name="exchangeBooks" rows="5"></textarea>
+                </div>
+
+                <div id="sellFields" class="conditional-fields">
+                    <label for="cost">Cost of the Book:</label>
+                    <input type="number" id="cost" name="cost">
+                </div>
+
+                <label for="contactNumber">Contact Number:</label>
+                <input type="tel" id="contactNumber" name="contactNumber" required>
+
+                <label for="email">Email ID:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="bookImage">Upload Image of the Book:</label>
+                <input type="file" id="bookImage" name="bookImage" accept="image/*" required>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div class="title-container">
+            <h1>Exchange Books</h1>
+            <img src="{% static 'RR/images/Logo.png' %}" alt="Logo">
+        </div>
+    </div>
+    <div class="showcase-container">
+        <h2>Showcase of Books</h2>
+        {% for book in books %}
+        <div class="showcase-item">
+            <img src="{{ book.image.url }}" alt="Book Image">
+            <div>
+                <p><strong>Name:</strong> {{ book.name }}</p>
+                <p><strong>Author:</strong> {{ book.author }}</p>
+                <p><strong>Volume:</strong> {{ book.volume }}</p>
+                <p><strong>Type:</strong> {{ book.type }}</p>
+                {% if book.type == "exchange" %}
+                <p><strong>Books for Exchange:</strong> {{ book.exchange_books }}</p>
+                {% elif book.type == "sell" %}
+                <p><strong>Cost:</strong> ₹{{ book.cost }}</p>
+                {% endif %}
+                <p><strong>Contact:</strong> {{ book.contact }}</p>
+                <p><strong>Email:</strong> {{ book.email }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+

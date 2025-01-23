@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Blogs</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('{% static "RR/images/background2-image.png" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: #333;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: black;
+            padding: 10px 20px;
+            border-radius: 20px;
+            background-color: #e0e0e0;
+        }
+        .navbar a:hover {
+            background-color: #c0c0c0;
+        }
+        .blogs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .blog-post {
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .blog-post:hover {
+            transform: scale(1.1);
+        }
+        .blog-post img {
+            width: 100%;
+            height: auto;
+        }
+        .blog-post h3 {
+            margin: 10px 0;
+        }
+        .blog-post p {
+            color: gray;
+        }
+        .blog-post button {
+            margin: 10px 0;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: #e0e0e0;
+            cursor: pointer;
+        }
+        .blog-post button:hover {
+            background-color: #c0c0c0;
+        }
+        .see-all {
+            margin: 20px 0;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: #f08080;
+            color: white;
+            cursor: pointer;
+        }
+        .see-all:hover {
+            background-color: #d06060;
+        }
+        .submit-blog {
+            margin: 40px 0;
+        }
+        .submit-blog form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .submit-blog input, .submit-blog textarea {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .submit-blog button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+        }
+        .submit-blog button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Promote Books</a>
+        <a href="#">Exchange Books</a>
+        <a href="#">Blogs</a>
+        <a href="#">Read and Earn</a>
+    </div>
+    <h1>Our Blogs</h1>
+    <div class="submit-blog">
+        <h2>Submit a Blog</h2>
+        <form method="POST" action="{% url 'blogs' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="title" placeholder="Blog Title" required>
+            <input type="text" name="author" placeholder="Author" required>
+            <input type="date" name="date" required>
+            <textarea name="content" placeholder="Blog Content" rows="4" required></textarea>
+            <input type="file" name="image" accept="image/*">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="blogs">
+        {% for blog in blogs %}
+        <div class="blog-post" onclick="location.href='{% url 'detailed_blog' blog.id %}'">
+            <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+            <h3>{{ blog.title }}</h3>
+            <p>{{ blog.date }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

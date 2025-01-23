@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Book Promotion Package</title>
+    <style>
+        body {
+            background-image: url('{% static "RR/images/background-image.png" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding-top: 20px;
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .title {
+            text-align: center;
+            margin-top: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            padding-top: 50px;
+        }
+        .package {
+            position: relative;
+            width: 200px;
+            height: 300px; /* Ensure all images are the same size */
+            cursor: pointer;
+        }
+        .package .frame {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: calc(100% + 10px);
+            height: calc(100% + 10px); /* Adjust height for the frame */
+            border: 2px solid #333;
+            border-radius: 10px;
+            z-index: -1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .package img {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        .note {
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .footer {
+            background-image: url("{% static 'RR/images/background-image.png' %}");
+            padding: 20px;
+            text-align: center;
+        }
+        .footer h2, .footer h3 {
+            margin-top: 0;
+        }
+        .footer-section, .query-form, .copyright {
+            margin-bottom: 20px;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .contact-info, .social-media {
+            flex: 1;
+            padding: 0 20px;
+            text-align: left;
+        }
+        .contact-info p, .social-media p, .social-media a {
+            margin: 5px 0;
+        }
+        .query-form input, .query-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .query-form button {
+            padding: 10px 20px;
+            background: #00796b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .query-form button:hover {
+            background: #004d40;
+        }
+    </style>
+</head>
+<body>
+    <div class="back-arrow" onclick="location.href='{% url 'user_dashboard' %}'">&#8592;</div>
+    <div class="logo">
+        <img src="{% static 'RR/images/Logo.png' %}" alt="Logo" width="100" height="100">
+    </div>
+    <h1 class="title">Buy Book Promotion Package</h1>
+    <div class="container">
+        <div class="package" onclick="location.href='{% url 'diamond' %}'">
+            <div class="frame"></div>
+            <img src="{% static 'RR/images/Diamond.png' %}" alt="Diamond Package">
+        </div>
+        <div class="package" onclick="location.href='{% url 'platinum' %}'">
+            <div class="frame"></div>
+            <img src="{% static 'RR/images/platinum.png' %}" alt="Platinum Package">
+        </div>
+        <div class="package" onclick="location.href='{% url 'gold' %}'">
+            <div class="frame"></div>
+            <img src="{% static 'RR/images/Gold.png' %}" alt="Gold Package">
+        </div>
+    </div>
+    <div class="note">
+        Note: Book cost isn’t included in these Packages.
+    </div>
+    <div class="footer">
+        <div class="footer-section">
+            <h2>Join the ReadRave Community</h2>
+            <p>Connect with fellow book lovers, share your favorite reads, and discover new literary gems. Our community is passionate about reading and eager to welcome you!</p>
+        </div>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>MAIN OFFICE</h3>
+                <p>123 Anywhere St.</p>
+                <p>Pune, Maharashtra</p>
+                <p>India</p>
+                <p>+91-9817526347</p>
+                <p><strong>Readrave@gmail.com</strong></p>
+            </div>
+            <div class="social-media">
+                <h3>SOCIAL MEDIA</h3>
+                <p><a href="#">Facebook</a></p>
+                <p><a href="#">Instagram</a></p>
+                <p><a href="#">Twitter</a></p>
+            </div>
+        </div>
+        <div class="query-form">
+            <h3>Contact Us</h3>
+            <form action="#" method="post">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 ReadRave. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+

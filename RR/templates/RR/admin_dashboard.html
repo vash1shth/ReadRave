@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            width: 100%;
+            background-color: #1d1d1d;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #2e2e2e;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            text-align: center;
+        }
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .card {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card h2 {
+            margin-top: 0;
+        }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-container input, .form-container select, .form-container textarea {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        .graph-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .graph {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            flex: 1 1 calc(50% - 40px);
+            min-width: 300px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>Admin Dashboard</h1>
+    </div>
+    <div class="sidebar">
+        <a href="#manage-read-and-earn">Manage Read and Earn</a>
+        <a href="#manage-users">Manage Users</a>
+        <a href="#delete-data">Delete Data</a>
+        <a href="#website-insights">Website Insights</a>
+    </div>
+    <div class="content">
+        <div id="manage-read-and-earn" class="card">
+            <h2>Manage Read and Earn</h2>
+            <form action="{% url 'add_book' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="text" name="book_title" placeholder="Book Title" required>
+                <input type="text" name="author" placeholder="Author" required>
+                <input type="text" name="volume" placeholder="Volume">
+                <input type="datetime-local" name="date_of_submission" required>
+                <input type="number" step="0.01" name="cost" placeholder="Cost" required>
+                <input type="file" name="image" required>
+                <button type="submit">Add Book</button>
+            </form>
+            
+        </div>
+        <div id="manage-users" class="card">
+            <h2>Manage Users</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- User data will be populated here -->
+                </tbody>
+            </table>
+            <form class="form-container">
+                {% csrf_token %}
+                <input type="text" name="user_id" placeholder="User ID" required>
+                <button type="button">Remove User</button>
+                <button type="button">Block User</button>
+            </form>
+        </div>
+        <div id="delete-data" class="card">
+            <h2>Delete Data</h2>
+            <form class="form-container">
+                {% csrf_token %}
+                <input type="text" name="data_id" placeholder="Data ID" required>
+                <button type="button">Delete Data</button>
+            </form>
+        </div>
+        <div id="website-insights" class="card">
+            <h2>Website Insights</h2>
+            <div class="graph-container">
+                <div class="graph">
+                    <h3>User Visits</h3>
+                    <p>Graph of user visits</p>
+                </div>
+                <div class="graph">
+                    <h3>Packages Purchased</h3>
+                    <p>Graph of packages purchased</p>
+                </div>
+                <!-- Add more graphs as needed -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
